@@ -4,7 +4,7 @@ SRCS	=	$(shell find . -type f -name "*.go")
 all: $(NAME)
 	
 $(NAME)	: $(SRCS)
-	# @go get ./...
+	@go get ./...
 	@go build -o $(NAME)
 clean:
 	@rm -f $(NAME)
