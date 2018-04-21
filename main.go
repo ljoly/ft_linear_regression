@@ -9,8 +9,7 @@ import (
 	"log"
 	"net/http"
 	"os"
-
-	chart "github.com/wcharczuk/go-chart"
+	"sort"
 )
 
 type Car struct {
@@ -36,51 +35,40 @@ func getData() {
 		)
 		fmt.Sscanf(line[0], "%d", &m)
 		fmt.Sscanf(line[1], "%d", &p)
-		cars = append(cars, Car{
-			Mileage: m,
-			Price:   p,
-		},
-		)
+		if !(m == 0 && p == 0) {
+			cars = append(cars, Car{
+				Mileage: m,
+				Price:   p,
+			},
+			)
+		}
 	}
 }
 
-func drawChart(res http.ResponseWriter, req *http.Request) {
-	graph := chart.Chart{
-		Series: []chart.Series{
-			chart.ContinuousSeries{
-				XValues: []float64{1.0, 2.0, 3.0, 4.0, 5.0},
-				YValues: []float64{1.0, 2.0, 3.0, 4.0, 5.0},
-			},
-		},
+var flagVisualizer *bool
+
+// coordinates for visualizer
+var (
+	mileages []float64
+	prices   []float64
+)
+
+func print() {
+	sort.Slice(cars, func(i, j int) bool { return cars[i].Mileage < cars[j].Mileage })
+	for _, v := range cars {
+		mileages = append(mileages, float64(v.Mileage))
+		prices = append(prices, float64(v.Price))
 	}
-
-	res.Header().Set("Content-Type", "image/png")
-	graph.Render(chart.PNG, res)
-}
-
-func drawChartWide(res http.ResponseWriter, req *http.Request) {
-	graph := chart.Chart{
-		Width: 1920, //this overrides the default.
-		Series: []chart.Series{
-			chart.ContinuousSeries{
-				XValues: []float64{1.0, 2.0, 3.0, 4.0},
-				YValues: []float64{1.0, 2.0, 3.0, 4.0},
-			},
-		},
-	}
-
-	res.Header().Set("Content-Type", "image/png")
-	graph.Render(chart.PNG, res)
+	http.HandleFunc("/", drawChart)
+	log.Fatal(http.ListenAndServe(":8080", nil))
 }
 
 func main() {
-	flagVisualizer := flag.Bool("v", false, "Plot data in a graph")
+	flagVisualizer = flag.Bool("v", false, "Plot data in a graph")
 	flag.Parse()
 	getData()
 	if *flagVisualizer {
-		http.HandleFunc("/", drawChart)
-		http.HandleFunc("/wide", drawChartWide)
-		log.Fatal(http.ListenAndServe(":8080", nil))
+		print()
 	}
 	// carsJSON, _ := json.Marshal(cars)
 	// fmt.Println(string(carsJSON))
