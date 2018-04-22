@@ -35,6 +35,10 @@ func drawChart(res http.ResponseWriter, req *http.Request) {
 				XValues: mileages,
 				YValues: prices,
 			},
+			chart.ContinuousSeries{
+				XValues: linearRegXs,
+				YValues: linearRegYs,
+			},
 		},
 	}
 

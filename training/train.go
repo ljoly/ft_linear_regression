@@ -20,7 +20,7 @@ type Car struct {
 var cars []Car
 
 func getData() {
-	csvFile, _ := os.Open("./assets/data.csv")
+	csvFile, _ := os.Open("../assets/data.csv")
 	reader := csv.NewReader(bufio.NewReader(csvFile))
 	for {
 		line, err := reader.Read()
@@ -49,8 +49,10 @@ var flagVisualizer *bool
 
 // coordinates for visualizer
 var (
-	mileages []float64
-	prices   []float64
+	mileages    []float64
+	prices      []float64
+	linearRegXs []float64
+	linearRegYs []float64
 )
 
 func print() {
