@@ -53,12 +53,30 @@ func drawChart(res http.ResponseWriter, req *http.Request) {
 	graph.Render(chart.PNG, res)
 }
 
+var (
+	aX          float64
+	aY          float64
+	bX          float64
+	bY          float64
+	linearRegXs []float64
+	linearRegYs []float64
+)
+
 func print() {
 	sort.Slice(cars, func(i, j int) bool { return cars[i].mileage < cars[j].mileage })
 	for _, v := range cars {
 		mileages = append(mileages, float64(v.mileage))
 		prices = append(prices, float64(v.price))
 	}
+
+	aX = minMileage
+	aY = theta1*aX + theta0
+	linearRegXs = append(linearRegXs, aX)
+	linearRegYs = append(linearRegYs, aY)
+	bX = maxMileage
+	bY = theta1*bX + theta0
+	linearRegXs = append(linearRegXs, bX)
+	linearRegYs = append(linearRegYs, bY)
 
 	http.HandleFunc("/", drawChart)
 	log.Fatal(http.ListenAndServe(":8080", nil))

@@ -9,15 +9,6 @@ import (
 	"os"
 )
 
-func normalizeData() {
-	for _, v := range cars {
-		carsNormalized = append(carsNormalized, Car{
-			mileage: (v.mileage - minMileage) / (maxMileage - minMileage),
-			price:   (v.price - minPrice) / (maxPrice - minPrice),
-		})
-	}
-}
-
 func getMins() {
 	minMileage = maxMileage
 	minPrice = maxPrice

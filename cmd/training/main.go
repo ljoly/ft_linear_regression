@@ -14,8 +14,6 @@ var (
 	carsNormalized []Car
 	mileages       []float64
 	prices         []float64
-	linearRegXs    []float64
-	linearRegYs    []float64
 	maxMileage     float64
 	minMileage     float64
 	maxPrice       float64
