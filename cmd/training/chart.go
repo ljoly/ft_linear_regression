@@ -31,7 +31,7 @@ func drawChart(res http.ResponseWriter, req *http.Request) {
 				Left: 30,
 			},
 		},
-		Width: 860,
+		Width: 1024,
 		Series: []chart.Series{
 			chart.ContinuousSeries{
 				Style: chart.Style{
