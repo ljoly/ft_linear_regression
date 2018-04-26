@@ -9,19 +9,6 @@ import (
 	"os"
 )
 
-func getMins() {
-	minMileage = maxMileage
-	minPrice = maxPrice
-	for _, v := range cars {
-		if v.mileage < minMileage {
-			minMileage = v.mileage
-		}
-		if v.price < minPrice {
-			minPrice = v.price
-		}
-	}
-}
-
 func getData() {
 	csvFile, _ := os.Open("../../assets/data.csv")
 	reader := csv.NewReader(bufio.NewReader(csvFile))
@@ -45,12 +32,13 @@ func getData() {
 			},
 			)
 		}
-		if m > maxMileage {
-			maxMileage = m
-		}
-		if p > maxPrice {
-			maxPrice = p
+		if *flagVisualizer {
+			if m > maxMileage {
+				maxMileage = m
+			}
+			if m < minMileage {
+				minMileage = m
+			}
 		}
 	}
-	getMins()
 }

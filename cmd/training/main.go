@@ -28,6 +28,7 @@ func main() {
 	getData()
 	normalizeData()
 	linearRegression()
+	saveThetas()
 	if *flagVisualizer {
 		print()
 	}
