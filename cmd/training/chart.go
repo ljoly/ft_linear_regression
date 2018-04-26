@@ -69,11 +69,11 @@ func print() {
 		prices = append(prices, float64(v.price))
 	}
 
-	aX = minMileage
+	aX = 22899
 	aY = theta1*aX + theta0
 	linearRegXs = append(linearRegXs, aX)
 	linearRegYs = append(linearRegYs, aY)
-	bX = maxMileage
+	bX = 240000
 	bY = theta1*bX + theta0
 	linearRegXs = append(linearRegXs, bX)
 	linearRegYs = append(linearRegYs, bY)
