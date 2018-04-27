@@ -16,7 +16,7 @@ func linearRegression() {
 	len := float64(len(carsNormalized))
 
 	theta0 = 1
-	theta1 = 10
+	theta1 = 1
 	for i := 0; i < 1000; i++ {
 		sum0 = 0
 		sum1 = 0
